@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="GeoGrounding integrates vision-language models with remote sensing data for groundbreaking insights.">
+  <meta name="keywords" content="Large Multimodal Models (LMMs), Fine-Grained Grounding, Remote Sensing (RS)">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GeoPixel: Pixel Grounding Large Multimodal Models in Remote Sensing</title>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Render LISA</title>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+  </head>
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <img src="static\images\logo3.png" alt="geopixel_logo" style="width: 100px; height: auto;">
+
+          <h1 class="title is-1 publication-title">GeoPixel: Pixel Grounding Large Multimodal Models in Remote Sensing</h1>
+          <div class="is-size-5 publication-authors">
+            <p>
+              Akashah Shabbir<sup style="color:#3399FF;">1</sup>,
+              Mohammed Zumri<sup style="color:#3399FF;">1</sup>,
+              Mohammed Bennamoun<sup style="color:#4CB5AE;">2</sup>,
+              Salman Khan<sup style="color:#FF66B3;">1,3</sup>,
+              Fahad S. Khan<sup style="color:#FFA280;">1,4</sup>
+            </p>
+            <p>
+              <sup style="color:#3399FF;">1</sup>Mohamed bin Zayed University of Artificial Intelligence,
+              <sup style="color:#4CB5AE;">2</sup>The University of Western Australia,
+              <sup style="color:#FF66B3;">3</sup>Australian National University,
+              <sup style="color:#FFA280;">4</sup>Linköping University
+            </p>
+          </div>
+          
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="columns is-centered">
+  <div class="column is-three-quarters">
+    <div class="content">
+      <p style="text-align: justify;">
+        GeoPixel is the first end-to-end high-resolution Remote Sensing Large Multimodal Model that supports pixel-level grounding. It facilitates detailed visual analysis by seamlessly integrating interleaved mask generation into conversations. With support for resolutions up to 4K HD in any aspect ratio, GeoPixel is ideal for precise remote sensing image analysis. To power grounded conversation generation (GCG) in remote sensing imagery, we also introduce GeoPixelD, a curated dataset created through an automated pipeline that leverages set-of-marks prompting and spatial priors tailored to RS data, ensuring systematic and controlled data generation. GeoPixel sets a new benchmark in pixel-level understanding, outperforming existing multimodal models in both single-target and multi-target segmentation tasks.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- First image -->
+<div class="columns is-centered">
+  <div class="column is-six-fifths">
+    <img src="./static/images/fig1.png" alt="Replacement Image" style="max-width: 70%; height: auto; display: block; margin: 0 auto;">
+  </div>
+</div>
+
+
+
+
+<section class="section" style="background-color:#efeff081">
+  <div class="container is-max-desktop">
+    <!-- Contributions -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+        <h2 class="title is-3">🏆 Contributions</h2>
+        <div class="content has-text-justified">
+          <ol type="1">
+            <li>
+              <b>GeoPixel: A specialized LMM for high resolution remote sensing image analysis.</b>  
+
+              We introduce GeoPixel, a Large Multimodal Model (LMM) specifically designed for analyzing high-resolution remote sensing (RS) images with advanced multi-target pixel grounding capabilities. The model dynamically partitions input images into local and global regions, ensuring efficient encoding and analysis while supporting resolutions of up to 4K.
+            </li>
+            <br>
+            <li>
+              <b>GeoPixelD: A multi-modal dataset for grounded conversations.</b>  
+              We created GeoPixelD, a multimodal grounded conversation dataset crafted for advanced remote sensing (RS) image analysis. It includes 53,816 grounded phrases associated with 600,817 objects, with captions averaging 740 characters. Featuring a hierarchically structured annotation framework, GeoPixelD delivers rich semantic descriptions, combining detailed scene-level context with precise, localized object details. The dataset is built using a scalable, semi-automated pipeline that leverages prior-informed visual prompting and state-of-the-art large multimodal models (LMMs). Rigorous verification and filtering processes ensure the production of high-quality, accurately grounded descriptions for individual objects and aggregated groups.
+            </li>
+            <br>
+            <li>
+              <b>Comprehensive evaluation benchmark for RS LMMs.</b>  
+              We introduce a detailed benchmark specifically designed to evaluate remote sensing LMMs in fine-grained visual understanding and generation tasks. This benchmark includes 5,427 manually validated pairs of referring expressions and segmentation masks, representing 61,384 annotated objects in remote sensing images. With descriptions averaging 647 characters in length, it provides a reliable platform to measure the model's ability to interpret and generate responses to complex, spatially grounded information.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+          <h2 class="title is-3"><img src="static/images/logo3.png" alt="geochat" width="60"
+                  style="vertical-align: bottom;"> GeoPixel: Architecture</h2>
+      </div>
+  </div>
+
+  <div class="container is-max-desktop">
+
+      <div class="columns is-centered has-text-centered">
+          <div class="column is-six-fifths"
+              style="display: flex; align-items: flex-start; justify-content: center;">
+              <figure style="text-align: center;">
+                  <img id="teaser" width="100%" src="static/images/geopixel_architecture.png">
+              </figure>
+          </div>
+      </div>
+      <div class="columns is-centered">
+          <div class="column is-full-width">
+              <div class="content has-text-justified">
+                  <p>
+                    The model comprises five key components: an adaptive image divider, a vision encoder, a large language model (LLM), a grounding vision encoder, and a pixel decoder. The adaptive image divider partitions input images into local and global regions, allowing efficient encoding at resolutions up to 4K. The vision encoder (scaled CLIP ViT-L/14) processes patches and global views, combining features for integration with the InternLM2 LLM, which aligns visual and textual modalities using Partial LoRA (Low-Rank Adaptation). For pixel-level grounding, GeoPixel incorporates SAM-2, a hierarchical masked autoencoder, and a lightweight pixel decoder to generate accurate segmentation masks. By leveraging pretrained encoders and modality-specific adaptations, GeoPixel achieves robust cross-modal alignment and enhanced performance for RS tasks, enabling precise segmentation and interpretation of high-resolution imagery.
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- Model Arch -->
+
+
+<!-- Dataset -->
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+          <h2 class="title is-3"> GeoPixelD Annotation Pipeline</h2>
+      </div>
+  </div>
+
+  <div class="container is-max-desktop">
+
+      <div class="columns is-centered has-text-centered">
+          <div class="column is-six-fifths"
+              style="display: flex; align-items: flex-start; justify-content: center;">
+              <figure style="text-align: center;">
+                  <img id="teaser" width="100%" src="static/images/dataset.png">
+              </figure>
+          </div>
+      </div>
+      <div class="columns is-centered">
+          <div class="column is-full-width">
+              <div class="content has-text-justified">
+                  <p>
+                    The GeoPixelD Annotation Pipeline provides detailed multi-tier descriptions of remote sensing imagery with object phrases
+                    aligned precisely with manually annotated masks. It begins with Holistic Image Annotation (bottom left), where an LMM generates
+                    concise scene descriptions. Individual Instance Annotation (bottom right) uses spatial({pos}) and categorical ({catagorory name}) priors
+                    with SOM ({mark number}) prompting to describe key objects. Cluster Annotation (top right) organizes smaller or dense objects using
+                    refined grids for precise spatial analysis.
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- Dataset -->
+
+
+
+<!-- Remote Sensing Grounded Conversation Generation (RS-GCG) -->
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+          <h2 class="title is-3"> Remote Sensing Grounded Conversation Generation (RS-GCG)</h2>
+      </div>
+  </div>
+
+  <div class="container is-max-desktop">
+
+      <div class="columns is-centered has-text-centered">
+          <div class="column is-six-fifths"
+              style="display: flex; align-items: flex-start; justify-content: center;">
+              <figure style="text-align: center;">
+                  <img id="teaser" width="100%" src="static/images/rsgcg_qualitative.png">
+              </figure>
+          </div>
+      </div>
+      <div class="columns is-centered">
+          <div class="column is-full-width">
+              <div class="content has-text-justified">
+                  <p>
+                    GeoPixel processes user queries to produce comprehensive descriptive outputs while simultaneously grounding identified objects through interleaved, pixel-level masks, demonstrating its advanced understanding and precise interpretation of high resolution remote sensing imagery.
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+<div class="table-container" style="overflow-x: auto; margin: 20px auto; max-width: 80%;">
+  <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px;">
+    <caption style="caption-side: bottom; text-align: justify; color: gray; font-size: 14px;">
+      Performance Comparison on RS-GCG task. LISA\( \dagger \) and PixelLM\( \dagger \) denote the pretrained LISA and PixelLM models adopted for RS-GCG and finetuned on GeoPixelD training data. GLaMM represents the zero-shot performance, whereas GLaMM-FT refers to the pretrained model finetuned on GeoPixelD. GeoPixel outperforms other models across all metrics.
+    </caption>
+    <thead>
+      <tr>
+        <th></th> 
+        <th></th>
+        <th></th>
+        <th colspan="3" style="border: 1px solid #ddd; padding: 8px;">Uni-Target</th>
+        <th colspan="3" style="border: 1px solid #ddd; padding: 8px;">Multi-Target</th>
+        <th colspan="3" style="border: 1px solid #ddd; padding: 8px;">Overall</th>
+      </tr>
+      <tr>
+        <th style="border: 1px solid #ddd; padding: 8px;">Model</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">CIDEr</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">METEOR</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">AP50</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">mIoU</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">Recall</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">AP50</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">mIoU</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">Recall</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">AP50</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">mIoU</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">Recall</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">GLAMM</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">0.1</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">5.8</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">1.2</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">18.1</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">14.8</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">0.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">16.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">6.3</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">0.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">16.9</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">7.1</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">LISA</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">14.6</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">22.3</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">9.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">41.7</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">43.1</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">8.3</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">43.1</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">27.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">8.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">42.7</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">29.0</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">PixelLM</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">18.3</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">22.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">13.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">41.2</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">44.0</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">10.4</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">42.9</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">28.1</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">10.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">42.4</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">29.6</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">GLAMM-FT</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">15.7</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">23.0</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">18.8</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">44.4</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">48.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">12.4</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">47.1</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">31.1</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">12.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">46.4</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">32.8</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">GeoPixel</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">21.6</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">24.0</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">25.5</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">50.8</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">55.6</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">18.0</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">52.9</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">37.0</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">19.0</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">52.3</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">38.8</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Referring Remote Sensing Image Segmentation (RRSIS) -->
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+          <h2 class="title is-3"> Referring Remote Sensing Image Segmentation (RRSIS)</h2>
+      </div>
+  </div>
+
+  <div class="container is-max-desktop">
+
+      <div class="columns is-centered has-text-centered">
+          <div class="column is-six-fifths"
+              style="display: flex; align-items: flex-start; justify-content: center;">
+              <figure style="text-align: center;">
+                  <img id="teaser" width="100%" src="static/images/rrsis_qualitative.png">
+              </figure>
+          </div>
+      </div>
+      <div class="columns is-centered">
+          <div class="column is-full-width">
+              <div class="content has-text-justified">
+                  <p>
+                    GeoPixel demonstrates a robust capability to interpret referring expressions of varying complexity and lengths to accurately generate precise segmentation masks.
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<div class="table-container" style="overflow-x: auto; margin: 20px auto; max-width: 80%;">
+  <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 14px;">
+    <thead>
+      <tr>
+        <th rowspan="2" style="border: 1px solid #ddd; padding: 8px;">Method</th>
+        <th colspan="3" style="border: 1px solid #ddd; padding: 8px;">Validation set</th>
+        <th colspan="3" style="border: 1px solid #ddd; padding: 8px;">Test Set</th>
+      </tr>
+      <tr>
+        <th style="border: 1px solid #ddd; padding: 8px;">P@0.5</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">olou</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">mIoU</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">P@0.5</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">olou</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">mIoU</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">RRN</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">51.09</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">66.53</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">46.06</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">51.07</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">66.43</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">45.64</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">CSMA</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">55.68</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">69.68</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">48.85</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">55.32</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">69.39</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">48.54</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">LSCM</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">57.12</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">69.28</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">50.36</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">56.02</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">69.05</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">49.92</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">CMPC</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">57.93</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">70.15</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">50.41</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">55.83</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">69.22</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">49.24</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">BRINet</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">58.79</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">70.73</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">51.14</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">56.90</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">69.88</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">49.65</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">CMPC+</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">59.19</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">70.14</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">51.41</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">57.65</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">68.64</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">50.24</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">LGCE</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">68.10</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">76.68</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">60.16</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">67.65</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">76.34</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">59.37</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">LAVT</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">69.54</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">77.59</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">61.46</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">69.52</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">77.19</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">61.04</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">RMSIN</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">74.66</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">78.27</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">65.10</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">74.26</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">77.79</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">64.20</td>
+      </tr>
+
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;">GeoPixel</td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><strong>80.00</strong></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><strong>81.77</strong></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><strong>67.99</strong></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><strong>83.33</strong></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><strong>84.90</strong></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><strong>67.30</strong></td>  
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+        @article{shabbir2025geopixel,
+          title={GeoPixel : Pixel Grounding Large Multimodal Models in Remote Sensing}, 
+          author={Akashah Shabbir, Mohammed Zumri, Mohammed Bennamoun, Fahad S. Khan, Salman Khan},
+          journal={ArXiv},
+          year={2025},
+          url={https://arxiv.org/}
+        } 
+</code></pre>
+  </div>
+</section>
+<section class="section" id="Acknowledgement">
+  <div class="container is-max-desktop content">
+      <h2 class="title">Acknowledgement</h2>
+      <p>
+          This website is adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>,
+          licensed under
+          a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+  </div>
+</section>
+
+
+  
+  <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin: 20px 0;">
+    <a href="https://www.ival-mbzuai.com" target="_blank">
+      <img src="static/images/IVAL_logo.png" style="height: 100px; object-fit: contain;" alt="IVAL Logo">
+    </a>
+    <a href="https://github.com/mbzuai-oryx" target="_blank">
+      <img src="static/images/Oryx_logo.png" style="height: 100px; object-fit: contain;" alt="Oryx Logo">
+    </a>
+    <a href="https://mbzuai.ac.ae" target="_blank">
+      <img src="static/images/MBZUAI_logo.png" style="height: 100px; object-fit: contain;" alt="MBZUAI Logo">
+    </a>
+  </div>
+  
+</body>
+</html>
+
+
