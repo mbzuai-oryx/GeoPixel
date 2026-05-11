@@ -111,12 +111,16 @@ Performance Comparison of GeoPixel in Referring Expression Segmentation on RRSIS
 ## 📜 Citation 
 
 ```bibtex
-@article{shabbir2025geopixel,
-  title={GeoPixel : Pixel Grounding Large Multimodal Models in Remote Sensing}, 
-  author={Akashah Shabbir, Mohammed Zumri, Mohammed Bennamoun, Fahad Shahbaz Khan, Salman Khan},
-  journal={ArXiv},
-  year={2025},
-  url={https://arxiv.org/abs/2501.13925}
+@inproceedings{
+shabbir2025geopixel,
+title={GeoPixel: Pixel Grounding Large Multimodal Model in Remote Sensing},
+author={Akashah Shabbir and Mohammed Zumri and Mohammed Bennamoun and Fahad Shahbaz Khan and Salman Khan},
+booktitle={Forty-second International Conference on Machine Learning},
+year={2025},
+articleno = {2145},
+numpages = {17},
+location = {Vancouver, Canada},
+series = {ICML'25}
 }
 ```
 
